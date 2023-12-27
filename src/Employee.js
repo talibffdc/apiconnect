@@ -16,7 +16,7 @@ function Employee({ employee, onDelete, onUpdate,fetchData }) {
   const handleDelete = async (id) => {
     try {
       // Replace the URL with your delete API endpoint
-      await axios.delete(`http://localhost:8000/todos/${id}`);
+      await axios.delete(`https://crud-api-first.onrender.com/todos/${id}`);
       fetchData();
       
       // Update the state after successful deletion
@@ -30,7 +30,7 @@ function Employee({ employee, onDelete, onUpdate,fetchData }) {
   const handleUpdate = async (id) => {
     try {
       // Replace the URL with your update API endpoint
-      await axios.put(`http://localhost:8000/todos/${id}`, updatedEmployee);
+      await axios.put(`https://crud-api-first.onrender.com/todos/${id}`, updatedEmployee);
 
       
       // Optionally, update the local state or refresh the data after successful update

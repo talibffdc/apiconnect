@@ -18,7 +18,7 @@ function App() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/showdata"); // Replace with your API endpoint
+      const response = await axios.get("https://crud-api-first.onrender.com/showdata"); // Replace with your API endpoint
       console.log(response.data);
       setEmployeeData(response.data);
       
@@ -60,7 +60,7 @@ function App() {
   const handleCreate = async () => {
     try {
       // Replace the URL with your create API endpoint
-      const response = await axios.post('http://localhost:8000/todos', newEmployee);
+      const response = await axios.post('https://crud-api-first.onrender.com/todos', newEmployee);
       
       // Handle the response as needed, e.g., update the UI or navigate to another page
       console.log('Employee created:', response.data);
