@@ -7,9 +7,9 @@ function App() {
   const [employeeData, setEmployeeData] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);
   const [newEmployee, setNewEmployee] = useState({
-    title: "",
-   description: "",
-  
+    name: "",
+    position: "",
+    salary: "",
   });
 
   const handleDelete = (id) => {
@@ -18,25 +18,20 @@ function App() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("https://crud-api-first.onrender.com/showdata"); // Replace with your API endpoint
+      const response = await axios.get(
+        "https://crud-api-first.onrender.com/showdata"
+      ); // Replace with your API endpoint
       console.log(response.data);
       setEmployeeData(response.data);
-      
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
   useEffect(() => {
-
     // Fetch initial data when the component mounts
-    
-  
+
     fetchData();
-  }, []); 
-
-
-
-
+  }, []);
 
   const handleAdd = () => {
     setShowAddForm(true);
@@ -46,7 +41,7 @@ function App() {
     // Generate a unique ID for the new employee
     const newId = Math.max(...employeeData.map((employee) => employee.id)) + 1;
     setEmployeeData([...employeeData, { id: newId, ...newEmployee }]);
-    setNewEmployee({ title: "", description: ""});
+    setNewEmployee({ title: "", description: "" });
     setShowAddForm(false);
   };
 
@@ -64,11 +59,12 @@ function App() {
       
       // Handle the response as needed, e.g., update the UI or navigate to another page
       console.log('Employee created:', response.data);
-
+      fetchData();
       // Optionally, clear the form after successful creation
       setNewEmployee({
-        title: '',
-        description:'',
+        name: '',
+        position:'',
+        salary:'',
         // Reset other properties as needed
       });
     } catch (error) {
@@ -80,43 +76,99 @@ function App() {
     <>
       <div className="container mt-5">
         <h1>Employee Management System</h1>
-        <button className="btn btn-primary mb-3" onClick={handleAdd}  data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button
+          className="btn btn-primary mb-3"
+          onClick={handleAdd}
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
           Add New Employee
         </button>
 
-        <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div className="modal-dialog">
-    <div className="modal-content">
-      <div className="modal-header">
-        <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-          
-        
-        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div
+          className="modal fade"
+          id="exampleModal"
+          tabIndex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">
+                  Add here
+                </h5>
+
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="modal-body">
+                <input
+                  className="form-control my-2"
+                  placeholder="Name"
+                  type="text"
+                  value={newEmployee.name}
+                  onChange={(e) =>
+                    setNewEmployee({ ...newEmployee, name: e.target.value })
+                  }
+                />
+                <input
+                  className="form-control my-2"
+                  placeholder="Position"
+                  type="text"
+                  value={newEmployee.position}
+                  onChange={(e) =>
+                    setNewEmployee({
+                      ...newEmployee,
+                      position: e.target.value,
+                    })
+                  }
+                />
+
+                  <input
+                  className="form-control my-2"
+                  placeholder=" Salary"
+                  type="text"
+                  value={newEmployee.salary}
+                  onChange={(e) =>
+                    setNewEmployee({
+                      ...newEmployee,
+                      salary: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  className="btn btn-success"
+                  data-bs-dismiss="modal"
+                  onClick={handleCreate}
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <EmployeeList
+          employeeData={employeeData}
+          onDelete={handleDelete}
+          onUpdate={handleUpdate}
+          fetchData={fetchData}
+        />
       </div>
-      <div className="modal-body">
-
-        <input className="form-control my-2" placeholder=" title" type="text" value={newEmployee.title} onChange={(e) => setNewEmployee({ ...newEmployee, title: e.target.value })} />
-        <input className="form-control my-2" placeholder=" description" type="text" value={newEmployee.description}
-                  onChange={(e) => setNewEmployee({ ...newEmployee, description: e.target.value })}/>
-                  
-
-      </div>
-      <div className="modal-footer">
-        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button className="btn btn-success" data-bs-dismiss="modal"onClick={handleCreate} >
-                Save
-              </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-        
-
-
-
-      <EmployeeList employeeData={employeeData} onDelete={handleDelete} onUpdate={handleUpdate} fetchData={fetchData} />
-    </div>
     </>
   );
 }

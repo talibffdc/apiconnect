@@ -3,19 +3,18 @@
 import React from "react";
 import Employee from "./Employee";
 
-function EmployeeList({ employeeData, onDelete, onUpdate, fetchData }) {
+function EmployeeList({ employeeData, onDelete, onUpdate, fetchData, }) {
 
   return (
     <div>
-      {employeeData.map((employee) => (
         <Employee
-          key={employee._id}
-          employee={employee}
+          employeeData={employeeData}
+         
+         
           onDelete={onDelete}
           onUpdate={onUpdate}
           fetchData={fetchData}
         />
-      ))}
     </div>
   );
 }
