@@ -4,7 +4,9 @@ import axios from "axios";
 function Employee({ employeeData, onUpdate, fetchData, id }) {
   const [isEditing, setIsEditing] = useState(false);
   const [updatedEmployee, setUpdatedEmployee] = useState({ ...employeeData });
-  console.log(updatedEmployee.name);
+
+  console.log(updatedEmployee);
+ 
 
   const modalId = `exampleModal${id}`;
 

@@ -55,22 +55,34 @@ function App() {
   const handleCreate = async () => {
     try {
       // Replace the URL with your create API endpoint
-      const response = await axios.post('https://crud-api-first.onrender.com/todos', newEmployee);
-      
+      const response = await axios.post(
+        'https://crud-api-first.onrender.com/todos',
+        newEmployee
+      );
+  
       // Handle the response as needed, e.g., update the UI or navigate to another page
       console.log('Employee created:', response.data);
+  
+      // Optionally, update the UI or navigate to another page
+  
+      // Show alert
+      window.alert('Employee created successfully!');
+  
+      // Fetch updated data from the server
       fetchData();
+  
       // Optionally, clear the form after successful creation
       setNewEmployee({
         name: '',
-        position:'',
-        salary:'',
+        position: '',
+        salary: '',
         // Reset other properties as needed
       });
     } catch (error) {
       console.error('Error creating employee:', error);
     }
   };
+  
 
   return (
     <>
